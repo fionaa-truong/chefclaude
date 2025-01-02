@@ -5,6 +5,5 @@ export default function Header() {
             <img src={ChefLogo} alt="Chef Logo" />
             <h1>Chef Claude</h1>
         </header>
-        
     )
 }
