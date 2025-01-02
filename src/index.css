@@ -25,3 +25,12 @@
     background-color: #f9f9f9;
   }
 }
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Nunito, sans-serif;
+}
