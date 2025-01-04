@@ -65,3 +65,14 @@ main {
   content: "+";
   margin-right: 5px;
 }
+
+input {
+  background-color: #dedbcb;
+  color: #ba9259;
+  font-family: nunito;
+  font-size: 1rem;
+}
+
+ul {
+  color: rgb(112, 94, 40);
+}
