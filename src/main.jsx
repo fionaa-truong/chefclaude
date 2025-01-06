@@ -1,13 +1,11 @@
 import { useState } from "react"
-import { getRecipeFromMistral } from "../ai"
-import IngredientsList from "../components/IngredientsList"
-import ClaudeRecipe from "../components/ClaudeRecipe"
+import IngredientsList from "./components/IngredientsList"
+import ClaudeRecipe from "./components/ClaudeRecipe"
+import { getRecipeFromMistral } from "./ai"
 
 export default function main() {
-
   const [ingredients, setIngredients] = useState([])
-
-  const[recipe, setRecipe] = useState("")
+  const [recipe, setRecipe] = useState("")
 
   async function getRecipe() {
     const recipeMarkdown = await getRecipeFromMistral(ingredients)
@@ -26,23 +24,23 @@ export default function main() {
   return(
     <main>
       <form onSubmit={addIngredient} className="add-ingredient-form">
-        <input 
-          type="text"
-          placeholder="e.g. garlic"
-          aria-label="Add ingredient"
-          name="ingredient"
-        />
-        <button>Add ingredient</button>
+          <input
+              type="text"
+              placeholder="e.g. garlic"
+              aria-label="Add ingredient"
+              name="ingredient"
+          />
+          <button>Add ingredient</button>
       </form>
-      
+            
       {ingredients.length > 0 && 
         <IngredientsList 
-          ingredients={ingredients}
-          getRecipe={getRecipe}
-        />
+            ingredients={ingredients}
+            getRecipe={getRecipe}
+        />            
       }
-
-      {recipe && <ClaudeRecipe recipe={recipe} />}    
-    </main>  
-  )
+            
+      {recipe && <ClaudeRecipe recipe={recipe} />}  
+    </main>
+    )
 }
