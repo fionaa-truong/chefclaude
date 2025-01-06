@@ -1,11 +1,12 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import IngredientsList from "./components/IngredientsList"
 import ClaudeRecipe from "./components/ClaudeRecipe"
 import { getRecipeFromMistral } from "./ai"
 
 export default function main() {
-  const [ingredients, setIngredients] = useState([])
+  const [ingredients, setIngredients] = useState(["chicken", "all the main spices", "corn", "heavy cream", "pasta"])
   const [recipe, setRecipe] = useState("")
+  const recipeSection = useRef(null)
 
   async function getRecipe() {
     const recipeMarkdown = await getRecipeFromMistral(ingredients)
@@ -35,6 +36,7 @@ export default function main() {
             
       {ingredients.length > 0 && 
         <IngredientsList 
+            ref={recipeSection}
             ingredients={ingredients}
             getRecipe={getRecipe}
         />            
