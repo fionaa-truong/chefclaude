@@ -1,14 +1,20 @@
 import { useState } from "react"
+import { getRecipeFromMistral } from "../ai"
+import IngredientsList from "../components/IngredientsList"
+import ClaudeRecipe from "../components/ClaudeRecipe"
 
 export default function main() {
 
   const [ingredients, setIngredients] = useState([])
 
-  const ingredientsListItems = ingredients.map(ingredient => (
-    <li key={ingredient}>{ingredient}</li>
-  ))
+  const[recipe, setRecipe] = useState("")
 
-  function handleSubmit(event) {
+  async function getRecipe() {
+    const recipeMarkdown = await getRecipeFromMistral(ingredients)
+    setRecipe(recipeMarkdown)
+  }
+
+  function addIngredient(event) {
     event.preventDefault()
     const formEl = event.currentTarget
     const formData = new FormData(formEl)
@@ -19,7 +25,7 @@ export default function main() {
 
   return(
     <main>
-      <form onSubmit={handleSubmit} className="add-ingredient-form">
+      <form onSubmit={addIngredient} className="add-ingredient-form">
         <input 
           type="text"
           placeholder="e.g. garlic"
@@ -28,17 +34,15 @@ export default function main() {
         />
         <button>Add ingredient</button>
       </form>
-      {ingredients.length > 0 && <section>
-        <h2>Ingredients on hand:</h2>
-        <ul className="ingredients-list" aria-live="polite">{ingredientsListItems}</ul>
-        {ingredients.length > 3 && <div className="get-recipe-container">
-          <div>
-            <h3>Ready for a recipe?</h3>
-            <p>Generate a recipe from your list of ingredients.</p>
-          </div>
-          <button>Get a recipe</button>
-        </div>}
-      </section>}
+      
+      {ingredients.length > 0 && 
+        <IngredientsList 
+          ingredients={ingredients}
+          getRecipe={getRecipe}
+        />
+      }
+
+      {recipe && <ClaudeRecipe recipe={recipe} />}    
     </main>  
   )
 }
